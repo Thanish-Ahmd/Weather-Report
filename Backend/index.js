@@ -23,17 +23,17 @@ app.use(express.json({ limit: "10mb" }));
 app.use(express.urlencoded({ limit: "10mb", extended: true }));
 
 const sendAllWeather = async (req, res) => {
-    const transporter = nodemailer.createTransport({
-        service: "gmail",
-        user: "smtp.gmail.com",
-        port: 465,
-        secure: true,
-        auth: {
-          type: "login",
-          user: "weathereportcodescale@gmail.com",
-          pass: process.env.GMAIL_PASSWORD,
-        },
-      });
+  const transporter = nodemailer.createTransport({
+    service: "gmail",
+    user: "smtp.gmail.com",
+    port: 465,
+    secure: true,
+    auth: {
+      type: "login",
+      user: "weathereportcodescale@gmail.com",
+      pass: process.env.GMAIL_PASSWORD,
+    },
+  });
 
   try {
     const users = await User.find();
@@ -86,8 +86,10 @@ const sendAllWeather = async (req, res) => {
   }
 };
 
-const interval = 60 *60* 1000;
+const interval =  3 * 60 * 60 * 1000;
+
 setInterval(sendAllWeather, interval);
+
 app.use("/api/user", userRouter);
 app.use("/api/weather", weatherRouter);
 
